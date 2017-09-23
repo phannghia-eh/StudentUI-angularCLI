@@ -13,28 +13,24 @@ import {Student} from "../models/student";
         <th>Delete</th>
       </thead>
       <tbody>
-        <tr *ngFor="let student of students">
+        <tr *ngFor="let student of students; let i = index" [attr.data-index]="i">
           <td>
-            <div *ngIf="!isEdit">
-              <input name="newId" class="transparent-input" type="text" (keydown.esc)="onCancel()" value="{{student.id}}" disabled/>
+            <div >
+              <input name="id" class="transparent-input" type="text" (keydown.esc)="onCancel()" value="{{student.id}}" disabled/>
             </div>
-            <div *ngIf="isEdit"><input type="text" value="{{student.id}}"/></div>
           </td>
           <td>
-            <div *ngIf="!isEdit">
-              <input name="newName" class="transparent-input" type="text" (keydown.esc)="onCancel()" value="{{student.name}}" disabled/>
+            <div >
+              <input name="name" class="transparent-input" type="text" (keydown.esc)="onCancel()" value="{{student.name}}" disabled/>
             </div>
-            <div *ngIf="isEdit"><input type="text" value="{{student.name}}"/></div>
           </td>
           <td>
-            <div *ngIf="!isEdit">
-              <input name="newGender" class="transparent-input" type="text" value="{{student.gender}}" disabled/>
+            <div >
+              <input name="gender" class="transparent-input" type="text" value="{{student.gender}}" disabled/>
             </div>
-            <div *ngIf="isEdit"><input type="text" value="{{student.gender}}"/></div>
           </td>
           <td>
-            <button *ngIf="!isEdit" class="btn btn-outline-primary" (click)="onEdit($event)">Edit</button>
-            <button *ngIf="isEdit" class="btn btn-outline-primary" (click)="onSave($event)" [value]="student.id">Save</button>
+            <button  class="btn btn-outline-primary" (click)="onEdit($event)">Edit</button>
           </td>
           <td><button class="btn btn-outline-secondary" (click)="onDelete($event)" id="{{student.id}}">Delete</button></td>
         </tr>
@@ -45,6 +41,7 @@ import {Student} from "../models/student";
 })
 export class ListStudentsComponentComponent implements OnInit {
 
+  @Input()
   private isEdit: boolean;
 
   private choosenItemId: string;
@@ -55,20 +52,16 @@ export class ListStudentsComponentComponent implements OnInit {
   @Output() editedStudent = new EventEmitter();
 
   constructor() {
-    this.isEdit = false;
+
   }
 
   private onEdit($event){
+    let index: number = $event.target.parentNode.parentNode.attributes[1].nodeValue;
     this.isEdit = true;
-  }
-
-  private onSave($event){
-    this.isEdit = false;
-    console.log($event.target)
-    this.choosenStudent.id = $event.target.attribute.id.nodeValue;
-    this.choosenStudent.name = $event.target.attribute.name.nodeValue;
-    this.choosenStudent.gender = $event.target.attribute.gender.nodeValue;
-    console.log(this.choosenStudent);
+    this.editedStudent.emit({
+      isEdit: this.isEdit,
+      data: this.students[index]
+    });
   }
 
   private onDelete($event){

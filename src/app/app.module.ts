@@ -9,6 +9,7 @@ import {HttpModule} from "@angular/http";
 import {CommonModule} from "@angular/common";
 import {StudentServiceService} from "./student-service/student-service.service";
 import { StudentItemComponent } from './student-item/student-item.component';
+import { StudentEditComponent } from './student-edit/student-edit.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { StudentItemComponent } from './student-item/student-item.component';
     StudentComponentComponent,
     ListStudentsComponentComponent,
     AddStudentsComponentComponent,
-    StudentItemComponent
+    StudentItemComponent,
+    StudentEditComponent
   ],
   imports: [
     BrowserModule,

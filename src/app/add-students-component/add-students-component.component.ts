@@ -7,13 +7,10 @@ import {Student} from "../models/student";
     <form>
       <span>ID: </span>
       <input type="text" name="id" placeholder="1412344" [value] = "id" (input)="onInputIdChange($event)"/>
-      {{id}}
       <span>Name: </span>
       <input type="text" name="name" placeholder="Phan Nghĩa" [value] = "name" (input)="onInputNameChange($event)"/>
-      {{name}}
       <span>Gender:</span>
       <input type="text" name="gender" placeholder="Male" [value] = "gender" (input)="onInputGenderChange($event)"/>
-      {{gender}}
       <input type="button" value="Add" (keydown.enter)="onAddNewStudent()" (click)="onAddNewStudent()"/>
     </form>
   `,
